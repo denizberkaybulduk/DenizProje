@@ -1,0 +1,121 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      
+      
+      "time": "08:00-15:00"
+    },
+    {
+      "id": 2,
+      "name": "Müşteri Görüşmesi",
+      "type": "Night",
+      "time": "16:00-23:00"
+    },
+    {
+      "id": 3,
+      "name": "E-posta Kontrolüüü"
+      
+    },
+    {
+      "id": 4,
+      "name": "Veri Girişi",
+      "type": "Night",
+      "time": "18:00-22:00"
+    },
+    {
+      "id": 1,
+      "name": "Rapor Hazırlama",
+      "type": "Morning",
+      "time": "08:00-15:00"
+    },
+    {
+      "id": 2,
+      "name": "Müşteri Görüşmesi",
+      "type": "Night",
+      "time": "16:00-23:00"
+    },
+    {
+      "id": 3,
+      "name": "E-posta Kontrolüüü",
+      "type": "Morning",
+      "time": "09:00-12:00"
+    },
+    {
+      "id": 4,
+      "name": "Veri Girişi",
+      "type": "Night",
+      "time": "18:00-22:00"
+    }
+    ,{
+      "id": 1,
+      "name": "Rapor Hazırlama",
+      "type": "Morning",
+      "time": "08:00-15:00"
+    },
+    {
+      "id": 2,
+      "name": "Müşteri Görüşmesi",
+      "type": "Night",
+      "time": "16:00-23:00"
+    },
+    {
+      "id": 3,
+      "name": "E-posta Kontrolüüü",
+      "type": "Morning",
+      "time": "09:00-12:00"
+    },
+    {
+      "id": 4,
+      "name": "Veri Girişi",
+      "type": "Night",
+      "time": "18:00-22:00"
+    },{
+      "id": 1,
+      "name": "Rapor Hazırlama",
+      "type": "Morning",
+      "time": "08:00-15:00"
+    },
+    {
+      "id": 2,
+      "name": "Müşteri Görüşmesi",
+      "type": "Night",
+      "time": "16:00-23:00"
+    },
+    {
+      "id": 3,
+      "name": "E-posta Kontrolüüü",
+      "type": "Morning",
+      "time": "09:00-12:00"
+    },
+    {
+      "id": 4,
+      "name": "Veri Girişi",
+      "type": "Night",
+      "time": "18:00-22:00"
+    },{
+      "id": 1,
+      "name": "Rapor Hazırlama",
+      "type": "Morning",
+      "time": "08:00-15:00"
+    },
+    {
+      "id": 2,
+      "name": "Müşteri Görüşmesi",
+      "type": "Night",
+      "time": "16:00-23:00"
+    },
+    {
+      "id": 3,
+      "name": "E-posta Kontrolüüü",
+      "type": "Morning",
+      "time": "09:00-12:00"
+    },
+    {
+      "id": 4,
+      "name": "Veri Girişi",
+      "type": "Night",
+      "time": "18:00-22:00"
+    }
+  ]
+}
