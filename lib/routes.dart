@@ -5,13 +5,15 @@ import 'View/task_detail.dart';
 
 class AppRoutes {
   static const splash = '/splash';
-  static const tasks = '/tasks';
-  static const taskDetail = '/taskDetail';
+  static const login = '/login';
+  static const users = '/users';
+  static const userDetail = '/userDetail';
 
   static final routes = [
     GetPage(name: splash, page: () => SplashView()),
-    GetPage(name: tasks, page: () => TaskListView()),
-    GetPage(name: taskDetail, 
-    page: () => TaskDetailPage(task: Get.arguments)),
+    GetPage(name: login, page: () => LoginPage()),
+    GetPage(name: users, page: () => UserListPage()),
+    GetPage(name: userDetail, page: () => UserDetailPage(user: Get.arguments)),
   ];
 }
+

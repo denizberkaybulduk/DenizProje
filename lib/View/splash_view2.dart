@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '/../routes.dart';
+
 
 class SplashView extends StatefulWidget {
   @override
@@ -22,7 +22,7 @@ class _SplashViewState extends State<SplashView> {
     });
 
     Future.delayed(const Duration(seconds: 5), () {
-      Get.toNamed(AppRoutes.tasks);
+      Get.toNamed(AppRoutes.login);
     });
   }
 
