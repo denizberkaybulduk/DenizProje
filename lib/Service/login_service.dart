@@ -1,39 +1,29 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'api_client.dart';
 
 class LoginService {
-  final String baseUrl = "https://reqres.in/api";
+  final ApiClient _client = ApiClient();
 
   Future<bool> login(String email, String password) async {
-    final url = Uri.parse('$baseUrl/login');
-    final response = await http.post(
-      url,
-      body: {
+    try {
+      final response = await _client.post('/login', {
         'email': email,
         'password': password,
-      },
-    );
+      });
 
-    if (response.statusCode == 200) {
-  // API başarılı yanıt döndü
-  final data = jsonDecode(response.body);
-
-  // Örnek: Token varsa kaydet veya döndür
-  final token = data['token'];
-  if (token != null) {
-    // İstersen token'ı saklayabiliriz, örneğin GetStorage veya SharedPreferences ile
-    // await storage.write('token', token);
-    return true; // Login başarılı
-  } else {
-    // Token yoksa da hata kabul edebiliriz
-    return false;
-  }
-} else {
-  // Hata durumu, örneğin 400, 401 gibi kodlar
-  // İstersen response.body içeriğini loglayabilir veya hata mesajı çıkarabilirsin
-  print('Login failed: ${response.statusCode} - ${response.body}');
-  return false;
-}
-
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print('Login successful, token: ${data['token']}');
+        
+        return true;
+      } else {
+        final errorData = jsonDecode(response.body);
+        print('Login failed: ${errorData['error']}');
+        return false;
+      }
+    } catch (e) {
+      print('Login exception: $e');
+      return false;
+    }
   }
 }
