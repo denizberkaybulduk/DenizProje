@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Controller/task_filter_controller.dart';
+import '/Controller/login_controller.dart';
 import 'package:get/get.dart';
 import 'routes.dart';
 import 'Controller/task_controller2.dart';
@@ -12,7 +12,7 @@ void main() async{
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   Get.put(FetchController());
   Get.put(TaskController());
-  Get.put(TaskFilterController());
+  Get.put(LoginController());
   Get.put(UserController());
   runApp(const MyApp());
   
