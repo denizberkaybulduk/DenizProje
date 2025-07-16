@@ -1,28 +1,42 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../Model/user_model.dart';
+import 'api_client.dart';
 
 class UserService {
-  Future<List<User>> fetchUsers() async {
-    final response = await http.get(Uri.parse("https://reqres.in/api/users?page=1"));
+  final ApiClient _client = ApiClient();
 
-    if (response.statusCode == 200) {
-      final jsonData = jsonDecode(response.body);
-      final List users = jsonData['data'];
-      return users.map((userJson) => User.fromJson(userJson)).toList();
-    } else {
-      throw Exception("Kullanıcılar alınamadı");
+  Future<List<User>> fetchUsers() async {
+    try {
+      final http.Response response = await _client.get('/users?page=1');
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final List<dynamic> usersJson = data['data'];
+        return usersJson.map((json) => User.fromJson(json)).toList();
+      } else {
+        throw Exception('Kullanıcıları getirirken hata oluştu.');
+      }
+    } catch (e) {
+      print('Hata: $e');
+      return [];
     }
   }
 
-  Future<User> fetchUserDetail(int id) async {
-    final response = await http.get(Uri.parse("https://reqres.in/api/users/$id"));
+  Future<User?> fetchUserDetail(int id) async {
+    try {
+      final response = await _client.get('/users/$id');
 
-    if (response.statusCode == 200) {
-      final jsonData = jsonDecode(response.body);
-      return User.fromJson(jsonData['data']);
-    } else {
-      throw Exception("Kullanıcı detayı alınamadı");
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return User.fromJson(data['data']);
+      } else {
+        print('Kullanıcı detayı getirilemedi: ${response.statusCode}');
+        return null;
+      }
+    } catch (e) {
+      print('Kullanıcı detayı hatası: $e');
+      return null;
     }
   }
 }
