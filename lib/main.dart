@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'routes.dart';
 import 'Controller/task_controller2.dart';
 import 'Controller/fetch_controller.dart';
+import 'Controller/user_controller.dart';
 
 
 void main() async{
@@ -12,6 +13,7 @@ void main() async{
   Get.put(FetchController());
   Get.put(TaskController());
   Get.put(TaskFilterController());
+  Get.put(UserController());
   runApp(const MyApp());
   
 
