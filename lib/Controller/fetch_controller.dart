@@ -1,10 +1,12 @@
+/*
+
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '/Controller/task_controller2.dart';
-import '/Model/task_model.dart';
+import '../Model/user_model.dart';
 
 class FetchController extends GetxController with WidgetsBindingObserver {
   Timer? _timer;
@@ -61,3 +63,5 @@ class FetchController extends GetxController with WidgetsBindingObserver {
     super.onClose();
   }
 }
+
+*/
