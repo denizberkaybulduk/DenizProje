@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'View/splash_view2.dart';
+import 'View/splash_view.dart';
 import 'View/user_list_view.dart';
-import 'View/task_detail.dart';
+import 'View/login_view.dart';
 
 class AppRoutes {
   static const splash = '/splash';
@@ -11,7 +11,7 @@ class AppRoutes {
 
   static final routes = [
     GetPage(name: splash, page: () => SplashView()),
-    GetPage(name: login, page: () => LoginPage()),
+    GetPage(name: login, page: () => LoginView()),
     GetPage(name: users, page: () => UserListView()),
     GetPage(name: userDetail, page: () => UserDetailPage(user: Get.arguments)),
   ];
