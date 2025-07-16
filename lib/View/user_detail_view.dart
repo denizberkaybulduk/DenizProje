@@ -55,6 +55,8 @@ class _UserDetailViewState extends State<UserDetailView> {
             const SizedBox(height: 16),
             Text("ID: ${widget.user.id}"),
             Text("Email: ${widget.user.email}"),
+            Text("Ad: ${widget.user.firstName.value}"),
+            Text("Soyad: ${widget.user.lastName.value}"),
             const SizedBox(height: 16),
             TextField(
               controller: _lastNameController,

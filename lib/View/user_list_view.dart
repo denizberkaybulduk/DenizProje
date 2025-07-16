@@ -21,7 +21,7 @@ class UserListView extends StatelessWidget {
               title: Text(user.email.value),
               subtitle: Text("ID: ${user.id.value.toString()}"),
               onTap: () {
-                Get.toNamed('/userDetail');
+                Get.toNamed('/userDetail', arguments: user);
               },
             );
           },
