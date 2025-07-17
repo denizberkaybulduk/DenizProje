@@ -17,6 +17,7 @@ class FetchController extends GetxController with WidgetsBindingObserver {
   void onInit() {
     super.onInit();
     WidgetsBinding.instance.addObserver(this);
+    _fetchUsers();
   }
 
   @override

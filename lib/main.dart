@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'Service/api_client.dart';
+import 'Service/fetch_service.dart';
 import '/Controller/login_controller.dart';
 import 'package:get/get.dart';
 import 'routes.dart';
@@ -8,6 +10,8 @@ import 'Controller/user_controller.dart';
 
 void main() async{
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  Get.put(ApiClient());
+  Get.put(FetchService());
   Get.put(LoginController());
   Get.put(UserController());
   runApp(const MyApp());
