@@ -2,7 +2,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-import '../../model/user_model.dart';
+import '../../Model/user_model.dart';
 
 class LocalUserService {
   Future<String> _getFilePath() async {
