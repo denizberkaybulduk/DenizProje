@@ -9,7 +9,7 @@ class UserListView extends StatefulWidget {
 }
 
 class _UserListViewState extends State<UserListView> {
-  final fetchController = Get.put(FetchController());
+  final fetchController = Get.find<FetchController>();
 
   @override
   Widget build(BuildContext context) {

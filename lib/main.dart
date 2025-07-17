@@ -1,19 +1,16 @@
 
 import 'package:flutter/material.dart';
-import 'Service/api_client.dart';
-import 'Service/fetch_service.dart';
-import '/Controller/login_controller.dart';
 import 'package:get/get.dart';
 import 'routes.dart';
-import 'Controller/user_controller.dart';
+import 'Bindings/controller_binding.dart';
+import 'Bindings/service_binding.dart';
+
 
 
 void main() async{
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  Get.put(ApiClient());
-  Get.put(FetchService());
-  Get.put(LoginController());
-  Get.put(UserController());
+  ServiceBinding().dependencies();
+  ControllerBinding().dependencies();
   runApp(const MyApp());
   
 
