@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Model/user_model.dart';
 import 'package:get/get.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import '../Controller/fetch_controller.dart';
+import '../Controller/user_controller.dart';
 
 class UserListView extends StatefulWidget {
   @override
@@ -9,7 +10,7 @@ class UserListView extends StatefulWidget {
 }
 
 class _UserListViewState extends State<UserListView> {
-  final fetchController = Get.find<FetchController>();
+  final fetchController = Get.find<UserController>();
 
   @override
   Widget build(BuildContext context) {

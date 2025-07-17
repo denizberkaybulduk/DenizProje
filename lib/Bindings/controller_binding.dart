@@ -8,6 +8,6 @@ class ControllerBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<LoginController>(() => LoginController());
     Get.lazyPut<UserController>(() => UserController());
-    Get.lazyPut<UserController>(() => UserController());
+    
   }
 }
