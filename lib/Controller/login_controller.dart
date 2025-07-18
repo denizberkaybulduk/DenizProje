@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import '../Service/login_service.dart';
+import '../Service/api/login_service.dart';
 
 class LoginController extends GetxController {
   final LoginService _service = LoginService();

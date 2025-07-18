@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'api/api_client.dart';
+import 'api_client.dart';
 
 class LoginService {
   final ApiClient _client = ApiClient();

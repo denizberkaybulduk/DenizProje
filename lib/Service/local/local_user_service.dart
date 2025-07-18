@@ -36,13 +36,6 @@ class LocalUserService {
     }
   }
 
-  Future<bool> login(String email, String password) async {
-    final users = await getUsers();
-    final user = users.firstWhere(
-      (u) => u.email.value == email && u.id.value.toString() == password,
-      orElse: () => User(id: 0, email: '', firstName: '', lastName: '', avatar: '', isError: true),
-    );
-    return user.isError.value == false;
-  }
+
 }
 

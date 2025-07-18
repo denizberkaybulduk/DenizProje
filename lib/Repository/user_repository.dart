@@ -2,6 +2,7 @@ import '../Model/user_model.dart';
 import '../Service/api/user_service.dart';
 import '../Service/local/local_user_service.dart';
 
+
 class UserRepository {
   final UserService _apiService;
   final LocalUserService _localService;
@@ -36,7 +37,5 @@ class UserRepository {
     await _localService.updateUser(user);
   }
 
-  Future<bool> login(String email, String password) async {
-    return await _localService.login(email, password);
-  }
+  
 }
