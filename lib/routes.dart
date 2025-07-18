@@ -14,7 +14,7 @@ class AppRoutes {
     GetPage(name: splash, page: () => SplashView()),
     GetPage(name: login, page: () => LoginView()),
     GetPage(name: users, page: () => UserListView()),
-    GetPage(name: userDetail, page: () => UserDetailView(user: Get.arguments)),
+    GetPage(name: userDetail, page: () => UserDetailView()),
   ];
 }
 

@@ -22,11 +22,7 @@ class UserController extends GetxController {
     users.value = fetchedUsers;
   }
 
-  void updateLastName(User user, String newLastName) async {
-    user.lastName.value = newLastName;
-    await userRepository.updateUser(user);
-    users.refresh(); // UI'nın güncellenmesi için
-  }
+  
 }
 
 

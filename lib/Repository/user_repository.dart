@@ -37,5 +37,11 @@ class UserRepository {
     await _localService.updateUser(user);
   }
 
+  Future<void> updateUserLastName(User user, String newLastName) async {
+  user.lastName.value = newLastName;
+  await _localService.updateUser(user); // veya hem local hem api varsa, ikisini de senkronize et
+}
+
+
   
 }

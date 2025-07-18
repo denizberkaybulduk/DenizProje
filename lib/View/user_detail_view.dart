@@ -1,46 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../Model/user_model.dart';
+import '../Controller/user_detail_controller.dart';
 
-class UserDetailView extends StatefulWidget {
-  final User user;
+class UserDetailView extends StatelessWidget {
+  final UserDetailController controller = Get.find<UserDetailController>();
 
-  const UserDetailView({super.key, required this.user});
+  late final TextEditingController _lastNameController;
 
-  @override
-  State<UserDetailView> createState() => _UserDetailViewState();
-}
-
-class _UserDetailViewState extends State<UserDetailView> {
-  late TextEditingController _lastNameController;
-
-  @override
-  void initState() {
-    super.initState();
-    _lastNameController = TextEditingController(text: widget.user.lastName.value);
-  }
-
-  @override
-  void dispose() {
-    _lastNameController.dispose();
-    super.dispose();
-  }
-
-  void _updateLastName() {
-    // Şimdilik sadece local olarak güncelliyoruz.
-    setState(() {
-      widget.user.lastName.value = _lastNameController.text;
-    });
-
-    // Gerçek senaryoda: API'ye PATCH/PUT ile güncelleme isteği gönderilir.
-
-    Get.snackbar("Başarılı", "Soyad güncellendi.");
+  UserDetailView({Key? key}) : super(key: key) {
+    _lastNameController = TextEditingController(text: controller.user.lastName.value);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Kullanıcı Detayı")),
+      appBar: AppBar(title: const Text("Kullanıcı Detayı")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -49,24 +24,41 @@ class _UserDetailViewState extends State<UserDetailView> {
             Center(
               child: CircleAvatar(
                 radius: 40,
-                backgroundImage: NetworkImage(widget.user.avatar.value),
+                backgroundImage: NetworkImage(controller.user.avatar.value),
               ),
             ),
             const SizedBox(height: 16),
-            Text("ID: ${widget.user.id}"),
-            Text("Email: ${widget.user.email}"),
-            Text("Ad: ${widget.user.firstName.value}"),
-            Text("Soyad: ${widget.user.lastName.value}"),
+            Text("ID: ${controller.user.id.value}"),
+            Text("Email: ${controller.user.email.value}"),
+            Text("Ad: ${controller.user.firstName.value}"),
+            Obx(() => Text("Soyad: ${controller.user.lastName.value}")),
             const SizedBox(height: 16),
             TextField(
               controller: _lastNameController,
               decoration: const InputDecoration(labelText: "Soyad (Düzenlenebilir)"),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _updateLastName,
-              child: const Text("Soyadı Güncelle"),
-            ),
+            Obx(() {
+              if(controller.isLoading.value) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return ElevatedButton(
+                onPressed: () async {
+                  final newLastName = _lastNameController.text.trim();
+                  if (newLastName.isEmpty) {
+                    Get.snackbar("Hata", "Soyad boş olamaz");
+                    return;
+                  }
+
+                  controller.isLoading.value = true;
+                  await controller.updateLastName(newLastName);
+                  controller.isLoading.value = false;
+
+                  Get.snackbar("Başarılı", "Soyad güncellendi.");
+                },
+                child: const Text("Soyadı Güncelle"),
+              );
+            }),
           ],
         ),
       ),
