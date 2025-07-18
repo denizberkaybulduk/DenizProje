@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Model/user_model.dart';
 import 'package:get/get.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../Controller/user_controller.dart';
+import '../Lifecycle/lifecycle_manager.dart';
 
 class UserListView extends StatefulWidget {
   @override
@@ -10,7 +10,8 @@ class UserListView extends StatefulWidget {
 }
 
 class _UserListViewState extends State<UserListView> {
-  final fetchController = Get.find<UserController>();
+  final userController = Get.find<UserController>();
+  final LifecycleManager lifecycleManager = Get.find<LifecycleManager>();
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +20,16 @@ class _UserListViewState extends State<UserListView> {
       body: VisibilityDetector(
         key: const Key('user-list-view'),
         onVisibilityChanged: (info) {
-          fetchController.onVisibilityChanged(info.visibleFraction > 0);
+          lifecycleManager.onVisibilityChanged(info.visibleFraction > 0);
         },
         child: Obx(() {
-          if (fetchController.users.isEmpty) {
+          if (userController.users.isEmpty) {
             return const Center(child: CircularProgressIndicator());
           }
           return ListView.builder(
-            itemCount: fetchController.users.length,
+            itemCount: userController.users.length,
             itemBuilder: (context, index) {
-              final user = fetchController.users[index];
+              final user = userController.users[index];
               return ListTile(
                 title: Text(user.email.value),
                 subtitle: Text("ID: ${user.id.value}"),
