@@ -13,6 +13,7 @@ dependencies:
   visibility_detector: ^0.4.0
   http: ^1.2.1
   path_provider: ^2.0.15
+  collection: ^1.17.0
   
 dev_dependencies:
   flutter_test:

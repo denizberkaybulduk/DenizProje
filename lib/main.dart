@@ -7,6 +7,7 @@ import 'Bindings/service_binding.dart';
 
 
 
+
 void main() async{
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   ServiceBinding().dependencies();

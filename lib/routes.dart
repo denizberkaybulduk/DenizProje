@@ -1,3 +1,4 @@
+import 'package:flutter_application_1/Bindings/controller_binding.dart';
 import 'package:get/get.dart';
 import 'View/splash_view.dart';
 import 'View/user_list_view.dart';
@@ -14,7 +15,10 @@ class AppRoutes {
     GetPage(name: splash, page: () => SplashView()),
     GetPage(name: login, page: () => LoginView()),
     GetPage(name: users, page: () => UserListView()),
-    GetPage(name: userDetail, page: () => UserDetailView()),
+    GetPage(
+      name: userDetail,
+      page: () => UserDetailView(),
+      binding: ControllerBinding(),),
   ];
 }
 

@@ -6,7 +6,6 @@ import '../Repository/user_repository.dart';
 
 class UserController extends GetxController {
   final UserRepository userRepository;
-
   var users = <User>[].obs;
 
   UserController(this.userRepository);
@@ -20,6 +19,13 @@ class UserController extends GetxController {
   void fetchUsers() async {
     final fetchedUsers = await userRepository.fetchUsers();
     users.value = fetchedUsers;
+  }
+
+  void updateUserInList(User updatedUser) {
+    final index = users.indexWhere((u) => u.id.value == updatedUser.id.value);
+    if (index != -1) {
+      users[index] = updatedUser;
+    }
   }
 
   

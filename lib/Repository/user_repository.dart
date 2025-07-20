@@ -1,6 +1,8 @@
 import '../Model/user_model.dart';
 import '../Service/api/user_service.dart';
 import '../Service/local/local_user_service.dart';
+import 'package:collection/collection.dart';
+
 
 
 class UserRepository {
@@ -15,18 +17,21 @@ class UserRepository {
 
     // API verilerini local ile birleştir
     final mergedUsers = apiUsers.map((apiUser) {
-      final localMatch = localUsers.firstWhere(
-        (u) => u.id.value == apiUser.id.value,
-        orElse: () => apiUser,
-      );
+  // localUsers'da eşleşen user varsa getir yoksa null döndür
+  final localMatch = localUsers.firstWhereOrNull(
+    (u) => u.id.value == apiUser.id.value,
+  );
 
-      // Local verileri koru
-      apiUser.lastName.value = localMatch.lastName.value;
-      apiUser.password.value = localMatch.password.value;
-      apiUser.themeColor.value = localMatch.themeColor.value;
+  if (localMatch != null) {
+    // Localde değişiklik varsa bunları koru
+    apiUser.lastName.value = localMatch.lastName.value;
+    apiUser.password.value = localMatch.password.value;
+    apiUser.themeColor.value = localMatch.themeColor.value;
+  }
 
-      return apiUser;
-    }).toList();
+  return apiUser;
+}).toList();
+
 
     // Local dosyayı güncelle (merge edilmiş hali kaydet)
     await _localService.saveUsers(mergedUsers);
