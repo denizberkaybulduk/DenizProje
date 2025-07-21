@@ -1,59 +1,45 @@
 import 'dart:async';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../Model/user_model.dart';
 import '../Service/fetch_service.dart';
 
-class FetchController extends GetxController with WidgetsBindingObserver {
+class FetchController extends GetxController {
   final FetchService _service = FetchService();
 
   var users = <User>[].obs;
   Timer? _timer;
 
-  bool _isAppInForeground = true;
-  bool _isVisible = false;
+  final RxBool isAppInForeground;
+  final RxBool isPageVisible;
+
+  FetchController({
+    required this.isAppInForeground,
+    required this.isPageVisible,
+  });
 
   @override
   void onInit() {
     super.onInit();
-    WidgetsBinding.instance.addObserver(this);
-  }
 
-  @override
-  void onClose() {
-    _stopFetching();
-    WidgetsBinding.instance.removeObserver(this);
-    super.onClose();
-  }
-
-  // App lifecycle değişikliklerini dinle
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    _isAppInForeground = (state == AppLifecycleState.resumed);
-    _updateFetchingState();
-  }
-
-  // UI görünürlük kontrolünden çağrılır
-  void onVisibilityChanged(bool visible) {
-    _isVisible = visible;
-    _updateFetchingState();
+    // Lifecycle veya görünürlük değişince fetch işlemini güncelle
+    everAll([isAppInForeground, isPageVisible], (_) {
+      _updateFetchingState();
+    });
   }
 
   void _updateFetchingState() {
-    if (_isAppInForeground && _isVisible) {
+    bool shouldFetch = isAppInForeground.value && isPageVisible.value;
+
+    if (shouldFetch && (_timer == null || !_timer!.isActive)) {
       _startFetching();
-    } else {
+    } else if (!shouldFetch) {
       _stopFetching();
     }
   }
 
   void _startFetching() {
-    if (_timer != null && _timer!.isActive) return;
-
     _fetchUsers();
-    _timer = Timer.periodic(const Duration(seconds: 3), (_) {
-      _fetchUsers();
-    });
+    _timer = Timer.periodic(const Duration(seconds: 3), (_) => _fetchUsers());
   }
 
   void _stopFetching() {
@@ -64,5 +50,11 @@ class FetchController extends GetxController with WidgetsBindingObserver {
   Future<void> _fetchUsers() async {
     final result = await _service.fetchUsers();
     users.value = result;
+  }
+
+  @override
+  void onClose() {
+    _stopFetching();
+    super.onClose();
   }
 }

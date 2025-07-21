@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Binding/global_binding.dart';
 import '/Controller/login_controller.dart';
 import 'package:get/get.dart';
 import 'routes.dart';
@@ -10,6 +11,7 @@ void main() async{
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   Get.put(LoginController());
   Get.put(UserController());
+  GlobalBinding().dependencies();
   runApp(const MyApp());
   
 

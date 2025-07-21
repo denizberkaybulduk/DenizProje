@@ -1,46 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../Model/user_model.dart';
+import '../Controller/user_detail_controller.dart';
 
-class UserDetailView extends StatefulWidget {
-  final User user;
-
-  const UserDetailView({super.key, required this.user});
-
-  @override
-  State<UserDetailView> createState() => _UserDetailViewState();
-}
-
-class _UserDetailViewState extends State<UserDetailView> {
-  late TextEditingController _lastNameController;
-
-  @override
-  void initState() {
-    super.initState();
-    _lastNameController = TextEditingController(text: widget.user.lastName.value);
-  }
-
-  @override
-  void dispose() {
-    _lastNameController.dispose();
-    super.dispose();
-  }
-
-  void _updateLastName() {
-    // Şimdilik sadece local olarak güncelliyoruz.
-    setState(() {
-      widget.user.lastName.value = _lastNameController.text;
-    });
-
-    // Gerçek senaryoda: API'ye PATCH/PUT ile güncelleme isteği gönderilir.
-
-    Get.snackbar("Başarılı", "Soyad güncellendi.");
-  }
-
+class UserDetailView extends GetView<UserDetailController> {
   @override
   Widget build(BuildContext context) {
+    final user = controller.user;
+
     return Scaffold(
-      appBar: AppBar(title: Text("Kullanıcı Detayı")),
+      appBar: AppBar(title: const Text("Kullanıcı Detayı")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -49,22 +17,22 @@ class _UserDetailViewState extends State<UserDetailView> {
             Center(
               child: CircleAvatar(
                 radius: 40,
-                backgroundImage: NetworkImage(widget.user.avatar.value),
+                backgroundImage: NetworkImage(user.avatar.value),
               ),
             ),
             const SizedBox(height: 16),
-            Text("ID: ${widget.user.id}"),
-            Text("Email: ${widget.user.email}"),
-            Text("Ad: ${widget.user.firstName.value}"),
-            Text("Soyad: ${widget.user.lastName.value}"),
+            Text("ID: ${user.id}"),
+            Text("Email: ${user.email}"),
+            Text("Ad: ${user.firstName.value}"),
+            Obx(() => Text("Soyad: ${user.lastName.value}")),
             const SizedBox(height: 16),
             TextField(
-              controller: _lastNameController,
+              controller: controller.lastNameController,
               decoration: const InputDecoration(labelText: "Soyad (Düzenlenebilir)"),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _updateLastName,
+              onPressed: controller.updateLastName,
               child: const Text("Soyadı Güncelle"),
             ),
           ],

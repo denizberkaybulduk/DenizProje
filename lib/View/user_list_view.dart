@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+
 import '../Controller/fetch_controller.dart';
 
 class UserListView extends StatefulWidget {
@@ -9,7 +10,7 @@ class UserListView extends StatefulWidget {
 }
 
 class _UserListViewState extends State<UserListView> {
-  final fetchController = Get.put(FetchController());
+  final fetchController = Get.find<FetchController>();
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class _UserListViewState extends State<UserListView> {
       body: VisibilityDetector(
         key: const Key('user-list-view'),
         onVisibilityChanged: (info) {
-          fetchController.onVisibilityChanged(info.visibleFraction > 0);
+          fetchController.isPageVisible.value = info.visibleFraction > 0;
         },
         child: Obx(() {
           if (fetchController.users.isEmpty) {
