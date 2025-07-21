@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-
 import '../Controller/fetch_controller.dart';
 import '../Service/fetch_service.dart';
 import '../Service/api_client.dart';

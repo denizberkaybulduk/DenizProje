@@ -1,17 +1,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Binding/global_binding.dart';
-import '/Controller/login_controller.dart';
+import 'package:flutter_application_1/Binding/login_binding.dart';
+import 'package:flutter_application_1/Binding/user_list_binding.dart';
 import 'package:get/get.dart';
 import 'routes.dart';
-import 'Controller/user_controller.dart';
+
 
 
 void main() async{
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  Get.put(LoginController());
-  Get.put(UserController());
+  LoginBinding().dependencies();
   GlobalBinding().dependencies();
+  UserListBinding().dependencies();
   runApp(const MyApp());
   
 
