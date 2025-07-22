@@ -18,5 +18,8 @@ class ApiClient {
     return http.get(url, headers: _headers);
   }
 
-  
+  Future<http.Response> getWithWholeUrl(String path, var newHeader) {
+    final url = Uri.parse('$path');
+    return http.get(url, headers: newHeader);
+  }
 }
