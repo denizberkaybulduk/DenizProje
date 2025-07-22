@@ -18,7 +18,7 @@ class UserDetailController extends GetxController {
   Future<void> updateLastName(String newLastName) async {
     try {
       isLoading.value = true;
-      await userRepository.updateUserLastName(user, newLastName);
+
       user.lastName.value = newLastName; // Controller içinde user güncellemesi
       userController.updateUserInList(user); // listeyi güncelle
       isLoading.value = false;
