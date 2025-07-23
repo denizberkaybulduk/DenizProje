@@ -8,37 +8,54 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Giriş Yap")),
+      appBar: AppBar(title: Text('Giriş Yap')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Obx(() => Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
-              onChanged: (value) => controller.email.value = value,
-              decoration: InputDecoration(labelText: "Email"),
+              decoration: InputDecoration(labelText: 'Email'),
+              onChanged: (val) => controller.email.value = val,
             ),
             TextField(
-              onChanged: (value) => controller.password.value = value,
+              decoration: InputDecoration(labelText: 'Şifre'),
               obscureText: true,
-              decoration: InputDecoration(labelText: "Şifre"),
+              onChanged: (val) => controller.password.value = val,
             ),
-            const SizedBox(height: 20),
-            if (controller.loginError.isNotEmpty)
-              Text(
-                controller.loginError.value,
-                style: const TextStyle(color: Colors.red),
-              ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
+            
+            CheckboxListTile(
+              title: Text("Beni Hatırla"),
+              value: controller.rememberMe.value,
+              onChanged: (val) {
+                if (val != null) {
+                  controller.rememberMe.value = val;
+                }
+              },
+              controlAffinity: ListTileControlAffinity.leading,
+            ),
+
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: controller.isLoading.value ? null : () => controller.login(),
-              child: controller.isLoading.value 
-                ? const CircularProgressIndicator(color: Colors.white)
-                : const Text("Giriş Yap"),
+              child: controller.isLoading.value
+                  ? CircularProgressIndicator()
+                  : Text('Giriş Yap'),
             ),
+
+            if (controller.loginError.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: Text(
+                  controller.loginError.value,
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
           ],
         )),
       ),
     );
   }
 }
+

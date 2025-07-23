@@ -1,14 +1,15 @@
 import 'dart:async';
+import 'package:flutter_application_1/Service/api/user_service.dart';
 import 'package:get/get.dart';
 import '../Model/user_model.dart';
-import '../Repository/user_repository.dart';
 
 
 class UserController extends GetxController {
-  final UserRepository userRepository;
+  final UserService _userService;
   var users = <User>[].obs;
+  var isLoading = true.obs;
 
-  UserController(this.userRepository);
+  UserController(this._userService);
 
   @override
   void onInit() {
@@ -17,8 +18,10 @@ class UserController extends GetxController {
   }
 
   void fetchUsers() async {
-    final fetchedUsers = await userRepository.fetchUsers();
+    isLoading.value = true;
+    final fetchedUsers = await _userService.fetchUsers();
     users.value = fetchedUsers;
+    isLoading.value = false;
   }
 
   void updateUserInList(User updatedUser) {

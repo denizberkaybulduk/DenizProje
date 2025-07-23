@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '/../routes.dart';
-
+import '../Service/auth_service.dart';
 
 class SplashView extends StatefulWidget {
   @override
@@ -14,16 +14,14 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
+    _startApp();
+  }
 
-    Future.delayed(const Duration(milliseconds: 300), () {
-      setState(() {
-        _opacity = 1.0;
-      });
-    });
+  void _startApp() async {
+    setState(() => _opacity = 1.0); // animasyonu başlat
 
-    Future.delayed(const Duration(seconds: 5), () {
-      Get.toNamed(AppRoutes.login);
-    });
+    await Get.find<AuthService>().handleStartup();
+    // işlem bitene kadar bekler, sonra yönlendirme yapar
   }
 
   @override

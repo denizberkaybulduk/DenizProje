@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../Controller/user_controller.dart';
 import '../Lifecycle/lifecycle_manager.dart';
+import '../Service/auth_service.dart';
 
 class UserListView extends StatefulWidget {
   @override
@@ -16,15 +17,28 @@ class _UserListViewState extends State<UserListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Kullanıcılar")),
+      appBar: AppBar(
+        title: Text('Kullanıcı Listesii'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              Get.find<AuthService>().logout();
+            },
+          )
+        ],
+      ),
       body: VisibilityDetector(
         key: const Key('user-list-view'),
         onVisibilityChanged: (info) {
           lifecycleManager.onVisibilityChanged(info.visibleFraction > 0);
         },
         child: Obx(() {
-          if (userController.users.isEmpty) {
+          if (userController.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
+          }
+          if (userController.users.isEmpty) {
+            return const Center(child: Text('Kullanıcı bulunamadı.'));
           }
           return ListView.builder(
             itemCount: userController.users.length,

@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiClient {
-  static const _baseUrl = 'https://reqres.in/api';
-  static const _headers = {
+  var _baseUrl = 'https://reqres.in/api';
+  var _headers = {
     'Content-Type': 'application/json',
     'x-api-key': 'reqres-free-v1',
   };

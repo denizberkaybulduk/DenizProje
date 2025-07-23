@@ -12,8 +12,7 @@ class LifecycleManager with WidgetsBindingObserver {
   LifecycleManager(this.fetchService);
 
   void init() {
-    WidgetsBinding.instance.addObserver(this);
-    _updateFetching(); // Uygulama açılırken başlatmak için
+    WidgetsBinding.instance.addObserver(this); 
   }
 
   void dispose() {
