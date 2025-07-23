@@ -3,12 +3,14 @@ import 'package:get/get.dart';
 import '../Controller/login_controller.dart';
 import '../Controller/user_controller.dart';
 import '../Controller/user_detail_controller.dart';
+import '../Controller/auth_controller.dart';
 
 
 class ControllerBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<LoginController>(() => LoginController());
+    Get.put(AuthController()); 
+    Get.put(LoginController());
     Get.lazyPut<UserController>(() => UserController(Get.find<UserService>()));
     Get.lazyPut<UserDetailController>(() {
       final user = Get.arguments;

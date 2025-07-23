@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Controller/auth_controller.dart';
 import 'package:get/get.dart';
-import '/../routes.dart';
-import '../Service/auth_service.dart';
+
 
 class SplashView extends StatefulWidget {
   @override
@@ -18,10 +18,10 @@ class _SplashViewState extends State<SplashView> {
   }
 
   void _startApp() async {
-    setState(() => _opacity = 1.0); // animasyonu başlat
+    setState(() => _opacity = 1.0); 
 
-    await Get.find<AuthService>().handleStartup();
-    // işlem bitene kadar bekler, sonra yönlendirme yapar
+    await Get.find<AuthController>().handleStartup();
+
   }
 
   @override

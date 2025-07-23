@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Controller/auth_controller.dart';
 import 'package:get/get.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../Controller/user_controller.dart';
 import '../Lifecycle/lifecycle_manager.dart';
-import '../Service/auth_service.dart';
+
 
 class UserListView extends StatefulWidget {
   @override
@@ -23,7 +24,7 @@ class _UserListViewState extends State<UserListView> {
           IconButton(
             icon: Icon(Icons.logout),
             onPressed: () {
-              Get.find<AuthService>().logout();
+              Get.find<AuthController>().logout();
             },
           )
         ],
