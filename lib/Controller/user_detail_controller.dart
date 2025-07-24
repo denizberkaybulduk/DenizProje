@@ -19,7 +19,6 @@ class UserDetailController extends GetxController {
       isLoading.value = true;
 
       user.lastName.value = newLastName; 
-      userController.updateUserInList(user); 
       isLoading.value = false;
     } finally {
       isLoading.value = false;

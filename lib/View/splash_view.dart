@@ -1,51 +1,61 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Controller/auth_controller.dart';
 import 'package:get/get.dart';
-
+import 'package:visibility_detector/visibility_detector.dart';
+import '../../Controller/auth_controller.dart';
 
 class SplashView extends StatefulWidget {
+  const SplashView({super.key});
+
   @override
-  _SplashViewState createState() => _SplashViewState();
+  State<SplashView> createState() => _SplashViewState();
 }
 
 class _SplashViewState extends State<SplashView> {
+  final AuthController _authController = Get.find<AuthController>();
   double _opacity = 0.0;
 
   @override
   void initState() {
     super.initState();
-    _startApp();
+
+
+    Future.delayed(const Duration(milliseconds: 300), () {
+      setState(() => _opacity = 1.0);
+    });
+
+
+    _startInitialization();
   }
 
-  void _startApp() async {
-    setState(() => _opacity = 1.0); 
-
-    await Get.find<AuthController>().handleStartup();
-
+  Future<void> _startInitialization() async {
+    
+    await _authController.handleStartup();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: AnimatedOpacity(
-          duration: const Duration(seconds: 3),
-          opacity: _opacity,
-          child: const Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              FlutterLogo(size: 100),
-              SizedBox(height: 20),
-              Text(
-                "Hoşgeldin",
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.blueGrey,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          )),
-    ));
+      body: VisibilityDetector(
+        key: const Key('splash'),
+        onVisibilityChanged: (_) {},
+        child: Center(
+          child: AnimatedOpacity(
+            duration: const Duration(milliseconds: 1000),
+            opacity: _opacity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                FlutterLogo(size: 100),
+                SizedBox(height: 20),
+                Text("Hoşgeldiniz", style: TextStyle(fontSize: 24)),
+                SizedBox(height: 20),
+                CircularProgressIndicator(),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

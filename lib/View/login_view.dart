@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../Controller/login_controller.dart';
+import '../Controller/auth_controller.dart';
 
 class LoginView extends StatelessWidget {
-  final LoginController controller = Get.find<LoginController>();
+  final AuthController controller = Get.find<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +44,11 @@ class LoginView extends StatelessWidget {
                   : Text('Giriş Yap'),
             ),
 
-            if (controller.loginError.isNotEmpty)
+            if (controller.errorMessage.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.only(top: 12.0),
                 child: Text(
-                  controller.loginError.value,
+                  controller.errorMessage.value,
                   style: TextStyle(color: Colors.red),
                 ),
               ),

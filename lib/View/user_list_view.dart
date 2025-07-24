@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Controller/auth_controller.dart';
 import 'package:get/get.dart';
 import 'package:visibility_detector/visibility_detector.dart';
-import '../Controller/user_controller.dart';
+import '../Controller/auth_controller.dart';
 import '../Lifecycle/lifecycle_manager.dart';
 
 
@@ -12,7 +12,7 @@ class UserListView extends StatefulWidget {
 }
 
 class _UserListViewState extends State<UserListView> {
-  final userController = Get.find<UserController>();
+  final authController = Get.find<AuthController>();
   final LifecycleManager lifecycleManager = Get.find<LifecycleManager>();
 
   @override
@@ -35,16 +35,16 @@ class _UserListViewState extends State<UserListView> {
           lifecycleManager.onVisibilityChanged(info.visibleFraction > 0);
         },
         child: Obx(() {
-          if (userController.isLoading.value) {
+          if (authController.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
           }
-          if (userController.users.isEmpty) {
+          if (authController.users.isEmpty) {
             return const Center(child: Text('Kullanıcı bulunamadı.'));
           }
           return ListView.builder(
-            itemCount: userController.users.length,
+            itemCount: authController.users.length,
             itemBuilder: (context, index) {
-              final user = userController.users[index];
+              final user = authController.users[index];
               return ListTile(
                 title: Text(user.email.value),
                 subtitle: Text("ID: ${user.id.value}"),
