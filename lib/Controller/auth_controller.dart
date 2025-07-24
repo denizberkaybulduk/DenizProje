@@ -10,31 +10,34 @@ class AuthController extends GetxController {
 
   final RxString email = ''.obs;
   final RxString password = ''.obs;
+
   final RxBool rememberMe = false.obs;
   final RxBool isLoading = false.obs;
   final RxString errorMessage = ''.obs;
 
   final RxList<User> users = <User>[].obs;
 
-
-  Future<void> login() async {
+  Future<void> login({
+    required String email,
+    required String password,
+  }) async {
     isLoading.value = true;
     errorMessage.value = '';
     try {
       final response = await _apiClient.post('/login', {
-        'email': email.value,
-        'password': password.value,
+        'email': email,
+        'password': password,
       });
 
       if (response.statusCode == 200) {
         if (rememberMe.value) {
           await _storageService.saveLoginInfo(
-            email.value,
-            password.value,
+            email,
+            password,
             rememberMe.value,
           );
         }
-        Get.offAllNamed('/users');
+        await successLoginProcesses();
       } else {
         errorMessage.value = 'Giriş başarısız. Hatalı e-posta veya şifre.';
       }
@@ -45,28 +48,35 @@ class AuthController extends GetxController {
     }
   }
 
+  Future successLoginProcesses() async {
+    await fetchUsers();
+    Get.offAllNamed('/users');
+  }
 
   Future<void> handleStartup() async {
-    await fetchUsers(); 
-    await tryAutoLogin(); 
-
-    if (!rememberMe.value) {
-      Get.offAllNamed('/login');
+    bool result = await tryAutoLogin();
+    if (result) {
+      await successLoginProcesses();
+    } else {
+      if (!rememberMe.value) {
+        Get.offAllNamed('/login');
+      }
     }
   }
 
-
-  Future<void> tryAutoLogin() async {
+  Future<bool> tryAutoLogin() async {
     final saved = await _storageService.getLoginInfo();
     email.value = saved['email'] ?? '';
     password.value = saved['password'] ?? '';
     rememberMe.value = saved['rememberMe'] ?? false;
 
     if (email.isNotEmpty && password.isNotEmpty && rememberMe.value) {
-      await login();
+      return true;
+      await login(email: email.value, password: password.value);
+    } else {
+      return false;
     }
   }
-
 
   Future<void> fetchUsers() async {
     try {
@@ -77,7 +87,6 @@ class AuthController extends GetxController {
       users.clear();
     }
   }
-
 
   Future<void> logout() async {
     await _storageService.clearLoginInfo();
