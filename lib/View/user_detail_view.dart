@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../Model/user_model.dart';
 import '../Controller/user_detail_controller.dart';
 
 class UserDetailView extends StatelessWidget {

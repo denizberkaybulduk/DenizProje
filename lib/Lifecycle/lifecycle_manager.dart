@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:get/get.dart';
-import '../Controller/auth_controller.dart';
+import '../Controller/user_list_page_controller.dart';
 
 class LifecycleManager {
   Timer? _timer;
@@ -18,8 +18,8 @@ class LifecycleManager {
   void _startPeriodicFetch() {
     if (_timer != null) return; 
 
-    _timer = Timer.periodic(Duration(seconds: 10), (_) async {
-      await Get.find<AuthController>().fetchUsers();
+    _timer = Timer.periodic(const Duration(seconds: 10), (_) async {
+      await Get.find<UserListPageController>().fetchUsers();
     });
   }
 

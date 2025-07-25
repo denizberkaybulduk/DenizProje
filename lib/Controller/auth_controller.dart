@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
+
 import 'package:get/get.dart';
-import '../../Model/user_model.dart';
 import '../../Service/api_client.dart';
 import '../../Service/storage_service.dart';
+import 'user_list_page_controller.dart';
 
 class AuthController extends GetxController {
   final ApiClient _apiClient = ApiClient();
@@ -10,12 +11,12 @@ class AuthController extends GetxController {
 
   final RxString email = ''.obs;
   final RxString password = ''.obs;
+  String token = '';
 
   final RxBool rememberMe = false.obs;
   final RxBool isLoading = false.obs;
   final RxString errorMessage = ''.obs;
 
-  final RxList<User> users = <User>[].obs;
 
   Future<void> login({
     required String email,
@@ -30,16 +31,17 @@ class AuthController extends GetxController {
       });
 
       if (response.statusCode == 200) {
-        if (rememberMe.value) {
-          await _storageService.saveLoginInfo(
-            email,
-            password,
-            rememberMe.value,
-          );
+        final data = jsonDecode(response.body);
+        final token = data['token'];
+        if (token != null) {
+          _apiClient.setToken(token);
+          if (rememberMe.value) {
+            await _storageService.saveLoginInfo(token, rememberMe.value);
+          }
+          await successLoginProcesses();
         }
-        await successLoginProcesses();
       } else {
-        errorMessage.value = 'Giriş başarısız. Hatalı e-posta veya şifre.';
+        errorMessage.value = 'Token alınamadı.';
       }
     } catch (e) {
       errorMessage.value = 'Bir hata oluştu: $e';
@@ -49,7 +51,8 @@ class AuthController extends GetxController {
   }
 
   Future successLoginProcesses() async {
-    await fetchUsers();
+    final userController = Get.find<UserListPageController>();
+    await userController.fetchUsers();
     Get.offAllNamed('/users');
   }
 
@@ -66,40 +69,21 @@ class AuthController extends GetxController {
 
   Future<bool> tryAutoLogin() async {
     final saved = await _storageService.getLoginInfo();
-    email.value = saved['email'] ?? '';
-    password.value = saved['password'] ?? '';
+    token = saved['token'] ?? '';
     rememberMe.value = saved['rememberMe'] ?? false;
 
-    if (email.isNotEmpty && password.isNotEmpty && rememberMe.value) {
+    if (token.isNotEmpty && rememberMe.value) {
+      _apiClient.setToken(token);
       return true;
-      await login(email: email.value, password: password.value);
     } else {
       return false;
     }
   }
 
-  Future<void> fetchUsers() async {
-    try {
-      final result = await _apiClient.fetchUsers();
-      users.assignAll(result);
-    } catch (e) {
-      users.clear();
-      print('fetchUsers hata: $e');
-      Get.snackbar(
-        'Hata',
-        e.toString().replaceFirst('Exception: ', ''),
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
-  }
-
   Future<void> logout() async {
+    final userController = Get.find<UserListPageController>();
     await _storageService.clearLoginInfo();
-    email.value = '';
-    password.value = '';
-    rememberMe.value = false;
-    users.clear();
+    userController.users.clear();
     Get.offAllNamed('/login');
   }
 }

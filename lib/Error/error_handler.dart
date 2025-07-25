@@ -1,3 +1,5 @@
+/*
+
 import '../Model/app_error.dart';
 import 'dart:io';
 import 'dart:async';
@@ -17,3 +19,5 @@ class ErrorHandler {
     }
   }
 }
+
+*/

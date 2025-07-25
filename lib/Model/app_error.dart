@@ -1,3 +1,6 @@
+/*
+
+
 enum AppErrorType {
   network,
   server,
@@ -16,3 +19,5 @@ class AppError {
   @override
   String toString() => 'AppError(type: $type, message: $message)';
 }
+
+*/

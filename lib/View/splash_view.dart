@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 import '../../Controller/auth_controller.dart';
 
 class SplashView extends StatefulWidget {
@@ -19,43 +18,37 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     super.initState();
 
-
     Future.delayed(const Duration(milliseconds: 300), () {
       setState(() => _opacity = 1.0);
     });
-
 
     _startInitialization();
   }
 
   Future<void> _startInitialization() async {
-    
     await _authController.handleStartup();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: VisibilityDetector(
-        key: const Key('splash'),
-        onVisibilityChanged: (_) {},
-        child: Center(
-          child: AnimatedOpacity(
-            duration: const Duration(milliseconds: 1000),
-            opacity: _opacity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                FlutterLogo(size: 100),
-                SizedBox(height: 20),
-                Text("Hoşgeldiniz", style: TextStyle(fontSize: 24)),
-                SizedBox(height: 20),
-                CircularProgressIndicator(),
-              ],
-            ),
-          ),
+  return Scaffold(
+    body: Center(
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 100),
+        opacity: _opacity,
+        child: const Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            FlutterLogo(size: 100),
+            SizedBox(height: 20),
+            Text("Hoşgeldiniz", style: TextStyle(fontSize: 24)),
+            SizedBox(height: 20),
+            CircularProgressIndicator(),
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 }

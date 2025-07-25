@@ -12,7 +12,7 @@ class AppRoutes {
   static const userDetail = '/userDetail';
 
   static final routes = [
-    GetPage(name: splash, page: () => SplashView()),
+    GetPage(name: splash, page: () => const SplashView()),
     GetPage(name: login, page: () => LoginView()),
     GetPage(name: users, page: () => UserListView()),
     GetPage(
