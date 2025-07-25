@@ -19,7 +19,7 @@ class _UserListViewState extends State<UserListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Kullanıcı Listesii'),
+        title: Text('Kullanıcı Listesi'),
         actions: [
           IconButton(
             icon: Icon(Icons.logout),

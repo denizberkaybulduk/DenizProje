@@ -83,8 +83,14 @@ class AuthController extends GetxController {
       final result = await _apiClient.fetchUsers();
       users.assignAll(result);
     } catch (e) {
-      print('Kullanıcılar alınırken hata oluştu: $e');
       users.clear();
+      print('fetchUsers hata: $e');
+      Get.snackbar(
+        'Hata',
+        e.toString().replaceFirst('Exception: ', ''),
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
     }
   }
 

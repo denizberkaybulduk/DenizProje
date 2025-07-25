@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 class User {
-  final RxInt id;
+  final RxString id;
   final RxString email;
   final RxString firstName;
   final RxString lastName;
@@ -9,7 +9,7 @@ class User {
 
 
   User({
-    required int id,
+    required String id,
     required String email,
     required String firstName,
     required String lastName,
@@ -23,7 +23,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      id: json['id'] ?? 0,
+      id: json['id'].toString(),
       email: json['email'] ?? '',
       firstName: json['first_name'] ?? '',
       lastName: json['last_name'] ?? '',
